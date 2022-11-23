@@ -1,0 +1,87 @@
+package blc
+
+Import (Import (
+"bytes"
+"Encoding/GOB"
+"time"
+
+log "github.com/corgi-kx/ "
+Cure
+
+// The structure of the block
+Type Block Struct {
+// The previous block hash
+Prehash [] byte
+// Data DATA
+Transactions [] transaction
+// Timetable
+Timestamp int64
+// Block height
+Height int64
+	//random number
+Nonce int64
+// This block hashh
+Have [] byte
+}
+
+// Create a blockchain example
+Func NewBlock (Transactions [] Transaction, Prehash [] byte, Height Int64) *Block {
+block: = block {
+Prehash: Prehash,
+Transactions: Transactions,
+TimesStamp: Time.now (). Unix (),
+Height: Height,
+Nonce: 0,
+Hash: nil,
+}
+
+POW: = NewProofofwork (& Block)
+Nonce, have: = Pow.run ()
+
+block.nonce = nonce
+block.hash = have [:]
+log.info ("Pow Verify:", Pow.verify ())
+log.infof ("new block has been generated, the block height is%d", block.head)
+
+Return & Block
+}
+
+// Generate a creation block
+function
+// The previous block of the creation block is set to the following
+preHash := []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+// Generate a creation block
+GenesisBlock: = NewBlock (Transaction, Prehash, 1)
+
+Return geNesisblock
+}
+
+// Serialize the block object to [] byte
+func (b *block) serialize () [] byte {byte {
+var result bytes.buffer
+Encoder: = Gob.newenCoder (& Result)
+
+Err: = encoder.encode (b)
+if er! = nil {
+PANIC (ERR)
+}
+Return result.bytes ()
+}
+
+// Reverse serialization
+func (b *block) deserialize (d [] byte) {
+decoder: = gob.newdecoder (bytes.newreader (d))
+ERR: = DECODER.Decode (b)
+if er! = nil {
+log.panic (ERR)
+}
+}
+
+// Func IsgenesisBlock (Block *Block) Bool {
+// var have big.int
+// Hashint.Setbytes (block.prehash)
+// if big.newint (0) .cmp (& Hashint) == 0 {{
+// Return True
+//}
+// Return false
+//}
