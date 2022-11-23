@@ -1,0 +1,94 @@
+package blc
+
+import (
+	"bytes"
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/sha256"
+	"wxw-blockchain/util"
+
+	log "github.com/corgi-kx/"
+	"golang.org/x/crypto/ripemd160"
+)
+
+type bitcoinKey struct {
+	PrivateKey *ecdsa.PrivateKey
+	PublicKey  []byte
+}
+
+
+func NewBitcoinKey() *bitcoinKey {
+	b := new(bitcoinKey)
+	b.newKeyPair()
+	return b
+}
+
+func (b *bitcoinKey) newKeyPair() {
+	curve := elliptic.P256()
+	privateKey, err := ecdsa.GenerateKey(curve, rand.Reader)
+	if err != nil {
+		log.Panic(err)
+	}
+	b.PrivateKey = privateKey
+	b.PublicKey = append(b.PrivateKey.PublicKey.X.Bytes(), b.PrivateKey.PublicKey.Y.Bytes()...)
+}
+
+
+func (b *bitcoinKey) getAddress() []byte {
+	//1.ripemd160(sha256(publickey)
+	publicKeyHash := PublicKeyHash(b.PublicKey)
+
+
+	address := util.Base58Encode(hash)
+	return address
+}
+
+//ripemd160(sha256(publickey)
+func PublicKeyHash(publicKey []byte) []byte {
+	sha256publicKey := sha256.Sum256(publicKey)
+	r := ripemd160.New()
+	r.Reset()
+	r.Write(sha256publicKey[:])
+	ripPublicKey := r.Sum(nil)
+	return ripPublicKey
+}
+
+func checkSumHash(versionPublicKeyHash []byte) []byte {
+	checksumHash := sha256.Sum256(versionPublicKeyHash)
+	checksumHash = sha256.Sum256(checksumHash[:])
+	return checksumHash[:checksum]
+}
+
+func IsVaildBitcoinAddress(address string) bool {
+	addressByte := []byte(address)
+	hash := util.Base58Decode(addressByte)
+	if len(hash) != 25 {
+		return false
+	}
+	versionPublicKeyHash := hash[:len(hash)-checksum]
+	checkSumHash1 := hash[len(hash)-checksum:]
+	checkSumHash2 := checkSumHash(versionPublicKeyHash)
+	if bytes.Compare(checkSumHash1, checkSumHash2[:]) == 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
+
+func Ripemd160Hash(address string) []byte {
+	addressByte := []byte(address)
+	hash := util.Base58Decode(addressByte)
+	if len(hash) != 25 {
+		return nil
+	}
+	return hash[1 : len(hash)-checksum]
+}
+
+func (b *bitcoinKey) GetAddressFromPublicKey() string {
+	if b.PublicKey == nil {
+		return ""
+	}
+	return string(b.getAddress())
+}
