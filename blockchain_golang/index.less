@@ -1,0 +1,209 @@
+@import "./../../style/common";
+.exchangeNav{
+  width: 627px;
+  height: 70px;
+  margin:88px auto 48px;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  a{
+    flex: 1;
+    color:#fff;
+    line-height: 70px;
+    text-align: center;
+    cursor: pointer;
+  }
+  a:nth-child(1){
+    border-bottom-left-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+  }
+  a:nth-child(2){
+    border-bottom-right-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+  }
+  .unselect{
+     border:1px solid #5978be;
+   }
+  .selected{
+    background-image: linear-gradient(176deg,
+    #245bfc 0%,
+    #00a7ff 100%);
+  }
+}
+
+.legalTender{
+  margin:20px;
+  section{
+    >header{
+      color:#fff;
+      background-color: #273c6c;
+      display: flex;
+      >div:nth-child(1), >div:nth-child(2){
+        width:35%;
+        border-right:3px solid @index_bg;
+        flex:2;
+        >div:nth-child(1) {
+          color: #0088ff;
+          line-height:68px;
+          text-align: center;
+          font-size: 30px;
+        }
+        >div:nth-child(2) {
+          display: flex;
+          flex-wrap: wrap-reverse;
+          font-size: 18px;
+          line-height:90px;
+          flex:2;
+          .selected{
+            background:@mainColor;
+          }
+          >a {
+            flex:1;
+            padding-left:30px;
+            cursor: pointer;
+          }
+        }
+      }
+      >div:nth-child(3) {
+        width:30%;
+        flex:1;
+        display: flex;
+        flex-wrap: wrap-reverse;
+        >div{
+          flex:1;
+          text-align: center;
+          p{
+            margin-top:38px;
+            font-size: 18px;
+            color: #0088ff;
+          }
+          >span{
+            font-size: 18px;
+            margin-top:20px;
+            display:inline-block;
+            position:relative;
+          }
+          >span::after{
+            content:" ";
+            width: 0;
+            height: 0;
+            position:absolute;
+            top:10px;
+            left:40px;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 6px solid #fff;
+          }
+        }
+      }
+    }
+  }
+   .exList{
+     margin:26px 0px 30px;
+     >div{
+       margin:50px auto;
+       color:#fff;
+       text-align: center;
+       span{
+         display:inline-block;
+         margin-right:20px;
+       }
+     }
+     >table{
+       box-sizing: border-box;
+       img{
+         width:20px;
+         height:20px;
+         border-radius: 50%;
+         margin-right:10px;
+         vertical-align: middle;
+       }
+     }
+   }
+  .myOrder{
+    header{
+      height:94px;
+      background-color: #273c6c;
+      margin-bottom:25px;
+      >span{
+        display:inline-block;
+        color:#fff;
+        line-height: 94px;
+        padding-left:38px;
+        font-size:20px;
+        width:347px;
+        background:#284585;
+      }
+      .search{
+        float:right;
+        margin-right:100px;
+        width: 398px;
+        height: 56px;
+        background-color: #273c6e;
+        border-radius: 8px;
+        border: solid 2px #304a87;
+        margin-top:19px;
+        position:relative;
+        input{
+          width:100%;
+          height:100%;
+          background-color: #273c6e;
+          border:none;
+          padding-right:90px;
+          font-size: 17px;
+          color: #a9c2fd;
+          padding-left:25px;
+          border-radius: 8px;
+        }
+        button{
+          width: 88px;
+          height: 48px;
+          background-color: #4177fc;
+          border-radius: 5px;
+          border:none;
+          color:#fff;
+          font-size: 17px;
+          position:absolute;
+          right:2px;
+          top:2px;
+        }
+      }
+    }
+    table{
+      margin-bottom:20px;
+      tr{
+        cursor: pointer;
+      }
+      >tr:nth-child(4) {
+        td{
+          color:#4283c8;
+        }
+      }
+    }
+  }
+
+  table{
+    width:100%;
+    height:100%;
+    color:#fff;
+    background-color: #284585;
+    text-align: left;
+    th{
+      border-bottom:6px solid @bg_color;
+    }
+    td{
+      border-bottom:1px solid @bg_color;
+    }
+    >tr{
+      line-height: 64px;
+      td:nth-child(1),th:nth-child(1) {
+        padding-left:50px;
+      }
+      td:last-child,th:last-child{
+        padding-right:50px;
+        text-align: right;
+      }
+    }
+  }
+
+}
